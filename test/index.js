@@ -1,8 +1,37 @@
 import assert from 'assert';
 import unificationengineClient from '../lib';
 
-describe('unificationengine-client', function () {
-  it('should have unit test!', function () {
-    assert(false, 'we expected this package author to add actual unit tests.');
-  });
+describe('UnificationEngine', function () {
+
+    /*****************************************
+     * Main Engine Tests
+     *****************************************/
+
+    it('successfuly create user', function () {
+    });
+
+    it('successfuly delete user', function () {
+    });
+
+    it('successfuly list users', function () {
+    });
+
+    /*****************************************
+     * Connection Tests
+     *****************************************/
+
+    it('successfuly add connection', function () {
+    });
+
+    it('successfuly list connections', function () {
+    });
+
+    it('successfuly delete connection', function () {
+    });
+
+
+
+
+
+
 });
