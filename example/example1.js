@@ -1,7 +1,7 @@
 
 var logging = require("../dist/utils/logger.js")
 var UE = require("../dist/UnificationEngine");
-var UEUser = require("../dist/models/UEUser")
+var User = require("../dist/models/User")
 var ue = new UE("77e34324d1af445fab18907f092f898a","10f1f580972fd134f53189b81443dcb1");
 var async = require("async")
 var accessToken = "CAACEdEose0cBAOWy8Y2gRGUW0b8QmcS0etwmWZCEcqGUzmqIL8sJMhUzvwF2SYkZCQyoDJeZB0x4EqFlqkSUiAZAB5rbOOe2v7cVuwT2MZBFgc7cI7CHexWnfKTYjl0ZBjfgEw5MmnchWv8lotkwpZA8vAl8oGvrmzhVK5wJJznA5szoQdVf6JRmpqhDde94RdWaUXRm1lhODX8DoqXEKas"
@@ -9,15 +9,18 @@ var accessToken = "CAACEdEose0cBAOWy8Y2gRGUW0b8QmcS0etwmWZCEcqGUzmqIL8sJMhUzvwF2
 // var hossamApp = new UE("6545514abd26476fb0fffaa76bfff90b","551a6c05c55741c9bc0e12a56b282435");
 
 
-var user = new UEUser("200f6a0b-b45f-4742-b86e-f1fd2d5e118a","f6063346-0082-4bc1-8093-ebaa14955814")
+var user = new User("200f6a0b-b45f-4742-b86e-f1fd2d5e118a","f6063346-0082-4bc1-8093-ebaa14955814")
 
 user.listConnections().then(function(cons){
-    console.log("CONNS");
-    console.log(cons);
+    cons.forEach(function(con){
+        user.removeConnection(con.name).then(function(){
+            console.log("DELETED: " + con.name);
+        })
+    })
 }).catch(function(err){
     console.log(err);
 })
-// user.addConnection("fb","facebook",accessToken)
+// user.addConnection("fb3","facebook",accessToken)
 // .then(function(connection){
 //     console.log(connection);
 // })
