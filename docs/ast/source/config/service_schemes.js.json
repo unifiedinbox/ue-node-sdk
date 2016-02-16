@@ -1,0 +1,231 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "ArrayExpression",
+        "elements": [
+          {
+            "type": "Literal",
+            "value": "facebook",
+            "raw": "\"facebook\"",
+            "range": [
+              143,
+              153
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 4
+              },
+              "end": {
+                "line": 5,
+                "column": 14
+              }
+            }
+          },
+          {
+            "type": "Literal",
+            "value": "twitter",
+            "raw": "\"twitter\"",
+            "range": [
+              159,
+              168
+            ],
+            "loc": {
+              "start": {
+                "line": 6,
+                "column": 4
+              },
+              "end": {
+                "line": 6,
+                "column": 13
+              }
+            }
+          },
+          {
+            "type": "Literal",
+            "value": "googleplus",
+            "raw": "\"googleplus\"",
+            "range": [
+              174,
+              186
+            ],
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 4
+              },
+              "end": {
+                "line": 7,
+                "column": 16
+              }
+            }
+          },
+          {
+            "type": "Literal",
+            "value": "linkedin",
+            "raw": "\"linkedin\"",
+            "range": [
+              192,
+              202
+            ],
+            "loc": {
+              "start": {
+                "line": 8,
+                "column": 4
+              },
+              "end": {
+                "line": 8,
+                "column": 14
+              }
+            }
+          },
+          {
+            "type": "Literal",
+            "value": "sms",
+            "raw": "\"sms\"",
+            "range": [
+              208,
+              213
+            ],
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 4
+              },
+              "end": {
+                "line": 9,
+                "column": 9
+              }
+            }
+          },
+          {
+            "type": "Literal",
+            "value": "WEIBO",
+            "raw": "\"WEIBO\"",
+            "range": [
+              219,
+              226
+            ],
+            "loc": {
+              "start": {
+                "line": 10,
+                "column": 4
+              },
+              "end": {
+                "line": 10,
+                "column": 11
+              }
+            }
+          }
+        ],
+        "range": [
+          137,
+          228
+        ],
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 16
+          },
+          "end": {
+            "line": 11,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*****************************************\n * supported connection schemes\n *****************************************",
+            "range": [
+              0,
+              120
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 3,
+                "column": 44
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "range": [
+        121,
+        230
+      ],
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 13,
+          "column": 0
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*****************************************\n * supported connection schemes\n *****************************************",
+          "range": [
+            0,
+            120
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 3,
+              "column": 44
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    121,
+    230
+  ],
+  "loc": {
+    "start": {
+      "line": 4,
+      "column": 0
+    },
+    "end": {
+      "line": 13,
+      "column": 0
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*****************************************\n * supported connection schemes\n *****************************************",
+      "range": [
+        0,
+        120
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 44
+        }
+      }
+    }
+  ]
+}

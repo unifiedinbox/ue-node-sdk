@@ -1,7 +1,50 @@
-import UERequest from "../utils/UERequest.js";
-import Connection from "./Connection.js";
-import supportedConnectionSchemes from "../config/service_schemes.js";
-import logger from "../utils/logger.js";
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">lib/models/User.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/daedlock/unificationengine-client" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/UnificationEngine.js~UnificationEngine.html">UnificationEngine</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/models/Connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/models/User.js~User.html">User</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/models/User.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import UERequest from &quot;../utils/UERequest.js&quot;;
+import Connection from &quot;./Connection.js&quot;;
+import supportedConnectionSchemes from &quot;../config/service_schemes.js&quot;;
+import logger from &quot;../utils/logger.js&quot;;
 
 export default class User {
 
@@ -33,7 +76,7 @@ export default class User {
         this.userKey = key;
         this.userSecret = secret;
         if(!this.userKey || !this.userSecret){
-            throw new Error("USER_KEY and USER_SECRET are required.");
+            throw new Error(&quot;USER_KEY and USER_SECRET are required.&quot;);
         }
     }
 
@@ -44,7 +87,7 @@ export default class User {
      * @param {String} service a string representing a connector service - supported services are in config/service_schemes.js
      * @param {String} serviceAccessToken service access token acquired from the provider (fb token, twitter token..etc)
      *
-     * @return {Promise<Connection>} connection the created connection
+     * @return {Promise&lt;Connection&gt;} connection the created connection
      */
     addConnection(connectionName, service, serviceAccessToken) {
         if(!supportedConnectionSchemes.includes(service)){
@@ -52,10 +95,10 @@ export default class User {
         }
 
         const connectionUri  = `${service}://${serviceAccessToken}@${service}.com`;
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve,reject) =&gt; {
             UERequest({
-                url: "https://apiv2.unificationengine.com/v2/connection/add",
-                method: "POST",
+                url: &quot;https://apiv2.unificationengine.com/v2/connection/add&quot;,
+                method: &quot;POST&quot;,
                 auth: {
                     user: this.userKey,
                     pass: this.userSecret
@@ -65,35 +108,35 @@ export default class User {
                     name: connectionName
                 }
             })
-            .then(connection => {
+            .then(connection =&gt; {
                 const ueConnection = new Connection(connectionName, connectionUri, this );
                 resolve(ueConnection);
             })
-            .catch(err => reject(err));
+            .catch(err =&gt; reject(err));
         });
     }
 
     /**
      * List connections for current user
-     * @return {Promise<Connection>} List of Connection objects representing the user connections
+     * @return {Promise&lt;Connection&gt;} List of Connection objects representing the user connections
      */
     listConnections() {
         if ( !this.userKey || !this.userSecret ) {
-            throw new Error("User not authenticated");
+            throw new Error(&quot;User not authenticated&quot;);
         }
-        return new Promise(( resolve, reject ) => {
+        return new Promise(( resolve, reject ) =&gt; {
             UERequest({
-                url    : "https://apiv2.unificationengine.com/v2/connection/list",
-                method : "POST",
+                url    : &quot;https://apiv2.unificationengine.com/v2/connection/list&quot;,
+                method : &quot;POST&quot;,
                 auth   : {
                     user : this.userKey,
                     pass : this.userSecret
                 }
             })
-            .then(response  => {
+            .then(response  =&gt; {
                 // Parse response and create Connection objects
                 const connectionsResponse = response.connections;
-                const connections = (() => {
+                const connections = (() =&gt; {
                     let connectionObjects = [];
                     for(var key of Object.keys(connectionsResponse)){
                         const connection = new Connection( key,connectionsResponse[key].uri, this)
@@ -103,7 +146,7 @@ export default class User {
                 })();
                 resolve(connections);
             })
-            .catch(err  => reject(err));
+            .catch(err  =&gt; reject(err));
 
         });
 
@@ -119,8 +162,8 @@ export default class User {
      */
     removeConnection(connectionName) {
         return UERequest({
-            url    : "https://apiv2.unificationengine.com/v2/connection/remove",
-            method : "POST",
+            url    : &quot;https://apiv2.unificationengine.com/v2/connection/remove&quot;,
+            method : &quot;POST&quot;,
             auth   : {
                 user : this.userKey,
                 pass : this.userSecret
@@ -140,8 +183,8 @@ export default class User {
      */
     testConnection(serviceUri) {
         return UERequest({
-            url    : "https://apiv2.unificationengine.com/v2/connection/test",
-            method : "POST",
+            url    : &quot;https://apiv2.unificationengine.com/v2/connection/test&quot;,
+            method : &quot;POST&quot;,
             auth   : {
                 user : this.userKey,
                 pass : this.userSecret
@@ -156,3 +199,20 @@ export default class User {
 
 
 }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.5)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

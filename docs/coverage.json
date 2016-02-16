@@ -1,0 +1,45 @@
+{
+  "coverage": "41.66%",
+  "expectCount": 24,
+  "actualCount": 10,
+  "files": {
+    "lib/models/Connection.js": {
+      "expectCount": 7,
+      "actualCount": 2,
+      "undocumentLines": [
+        4,
+        24,
+        17,
+        16,
+        18
+      ]
+    },
+    "lib/UnificationEngine.js": {
+      "expectCount": 7,
+      "actualCount": 3,
+      "undocumentLines": [
+        5,
+        8,
+        9,
+        7
+      ]
+    },
+    "lib/models/User.js": {
+      "expectCount": 9,
+      "actualCount": 5,
+      "undocumentLines": [
+        6,
+        22,
+        33,
+        34
+      ]
+    },
+    "lib/utils/logger.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        1
+      ]
+    }
+  }
+}

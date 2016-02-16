@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">lib/models/Connection.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/daedlock/unificationengine-client" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/UnificationEngine.js~UnificationEngine.html">UnificationEngine</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/models/Connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/models/User.js~User.html">User</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/models/Connection.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import User from &quot;./User.js&quot;
+import UERequest from &quot;../utils/UERequest.js&quot;
+import logger from &quot;../utils/logger.js&quot;
+export default class Connection {
+
+    /**
+     * Constructor
+     * @param {String}  connectionName the connection identifier
+     * @param {String} connectionUri the connection uri
+     * @param {User} User the User instance of the user owning the connection
+     *
+     */
+    constructor(connectionName, connectionUri, user) {
+        if(!(user instanceof User))
+            throw new Error(&quot;USer instance required when creating a connection&quot;);
+        this.uri = connectionUri;
+        this.name = connectionName;
+        this.user = user;
+    }
+
+
+
+    //TODO: undefined
+    connectionRefresh() {
+
+    }
+
+    /**
+     * Used for message parts
+     * @access private
+     * @returns {Number} random id
+     */
+    _generateUniqueId(){
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + &apos;-&apos; + s4() + &apos;-&apos; + s4() + &apos;-&apos; +
+            s4() + &apos;-&apos; + s4() + s4() + s4();
+    }
+
+    /**
+     * Builds the API message parameter from passed options
+     *
+     * @access private
+     * @param {Object} messageOptions options for message
+     * @param {Array} messageOptions.receivers channels receiving the message
+     * @param {String} messageOptions.receivers.name channel name (Me | Page)
+     * @param {String} messageOptions.receivers.id in case of Page, this is the page id
+     * @param {String} messageOptions.message.subject message subject
+     * @param {Array} messageOptions.message.body message body
+     * @param {Array} messageOptions.message.image image uri
+     * @param {Array} messageOptions.message.link message link
+     * @param {Array} messageOptions.message.link.uri message link uri
+     * @param {Array} messageOptions.message.link.description  message link description
+     * @param {Array} messageOptions.message.link.title  message link title
+     *
+     * @returns {Promise}
+     */
+    _buildMessageQuery(messageOptions) {
+        if(!messageOptions.receivers || !messageOptions.message)
+            throw new Error(&quot;Message must have a message and areceiver&quot;)
+
+        const defaultContentType = &quot;binary&quot;;
+        let params = Object.assign({},messageOptions) //Clone for immutability
+        let queryObject = {}
+        //Formulate Receivers
+        params.receivers = params.receivers.map((receiver)=&gt;{
+            if(receiver.name &amp;&amp; receiver.name.toLowerCase() === &quot;me&quot;){
+                return {
+                    &quot;name&quot;:&quot;Me&quot;,
+                    &quot;address&quot;:&quot;test.test&quot;,
+                    &quot;Connector&quot;: this.name
+                }
+            }
+            else {
+
+                if(receiver.name &amp;&amp; receiver.name.toLowerCase() === &quot;page&quot;){
+                    return {
+                        &quot;name&quot;:&quot;Page&quot;,
+                        &quot;address&quot;: receiver.id,
+                        &quot;Connector&quot;: this.name
+                    }
+                }
+            }
+        });
+        queryObject.receivers = params.receivers;
+
+
+        //Formulate Message Parts
+        queryObject.parts = [];
+        if(params.message.body){
+            queryObject.parts.push({
+                id: this._generateUniqueId(),
+                contentType: defaultContentType,
+                type: &quot;body&quot;,
+                data: params.message.body,
+            })
+        };
+
+        //Image Part
+        if(params.message.image){
+            queryObject.parts.push({
+                id: this._generateUniqueId(),
+                contentType: defaultContentType,
+                type: &quot;image_link&quot;,
+                data: params.message.image
+            })
+        };
+
+
+        //Link Part
+        if(params.message.link) {
+            if(params.message.link.uri){
+                queryObject.parts.push({
+                    id: this._generateUniqueId(),
+                    contentType: defaultContentType,
+                    type: &quot;link&quot;,
+                    data: params.message.link.uri
+                });
+            }
+
+            if(params.message.link.description){
+                queryObject.parts.push({
+                    id: this._generateUniqueId(),
+                    contentType: defaultContentType,
+                    type: &quot;link_description&quot;,
+                    data: params.message.link.description
+                })
+            }
+
+            if(params.message.link.title){
+                queryObject.parts.push({
+                    id: this._generateUniqueId(),
+                    contentType: defaultContentType,
+                    type: &quot;link_title&quot;,
+                    data: params.message.link.title
+                })
+            }
+
+        }
+
+        //Subject
+        if(params.message.subject) {
+            queryObject.subject = params.message.subject;
+        }
+
+
+        logger.info(queryObject);
+        return queryObject;
+
+
+    }
+
+
+    /**
+     * Sends a message to service using a connector. A message can have multiple parts each with a different type.
+     * eg: One can send a message with 2 parts (image_link, body) to send a message with an image and text
+     *
+     * @param {Object} messageOptions options for message
+     * @param {Array} messageOptions.receivers channels receiving the message
+     * @param {String} messageOptions.receivers.name channel name (Me | Page)
+     * @param {String} messageOptions.receivers.id in case of Page, this is the page id
+     * @param {String} messageOptions.message.subject message subject
+     * @param {Array} messageOptions.message.body message body
+     * @param {Array} messageOptions.message.image image uri
+     * @param {Array} messageOptions.message.link message link
+     * @param {Array} messageOptions.message.link.uri message link uri
+     * @param {Array} messageOptions.message.link.description  message link description
+     * @param {Array} messageOptions.message.link.title  message link title
+     *
+     * @returns {Promise}
+     */
+    //TODO: Simplify params
+    sendMessage(messageOptions) {
+        //Mutate receiver connector to current instance
+        messageOptions.receivers = messageOptions.receivers.map((rec)=&gt; {
+            rec.Connector = this.name;
+            return rec
+        });
+        return UERequest({
+            url    : &quot;https://apiv2.unificationengine.com/v2/message/send&quot;,
+            method : &quot;POST&quot;,
+            auth   : {
+                user : this.user.userKey,
+                pass : this.user.userSecret
+            },
+            form: {
+                message: this._buildMessageQuery(messageOptions)
+            }
+        });
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.5)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
