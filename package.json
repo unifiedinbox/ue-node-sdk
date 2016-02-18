@@ -45,7 +45,7 @@
       "mocha": true
     }
   },
-  "repository": "daedlock/unificationengine-client",
+  "repository":"unifiedinbox/ue-node-sdk",
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
