@@ -131,9 +131,7 @@ connection.sendMessage({
 
 
 
-## License
 
-Apache-2.0 Â© [Hossam Saraya](http://saraya.io)
 
 
 [npm-image]: https://badge.fury.io/js/unificationengine-client.svg
