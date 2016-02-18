@@ -10,13 +10,130 @@ $ npm install --save unificationengine-client
 ## Usage
 
 ```js
-var unificationengineClient = require('unificationengine-client');
+var UEClient = require('unificationengine-client');
 
-unificationengineClient('Rainbow');
+var app = new UEClient("APP_KEY","APP_SECRET");
 ```
+
+#### Creating User
+```js
+app.createUser()
+.then(function(user){
+   //user is a User object
+})
+.catch(function(err){
+   //Handle error
+});
+```
+
+#### Listing Users
+```js
+app.listUsers()
+.then(function(users){
+   //users is an array of User objects
+})
+.catch(function(err){
+   //Handle error
+});
+```
+
+#### Deleting User
+```js
+app.deleteUser(user)
+.then(function(){
+	//user deleted succesfully
+})
+.catch(function(err){
+   //Handle error
+});
+```
+
+#### Adding a connection to a user
+```js
+user.addConnection(connectionName, service, serviceAccessToken)
+.then(function(connection){
+	//connection is a Connection object
+})
+.catch(function(err){
+   //Handle error
+});
+```
+
+- `connectionName` must be unique per connection.
+- `serviceAccessToken` has to be valid and working from the provider side
+
+
+#### Listing User connections
+```js
+user.listConnections()
+.then(function(connections){
+	//connections is an array of Connection objects
+})
+.catch(function(err){
+   //Handle error
+});
+```
+#### Removing a User Connection
+```js
+user.removeConnection(connectionName)
+.then(function(){
+	//connection removed successfully
+})
+.catch(function(err){
+   //Handle error
+});
+```
+
+#### Testing a connection
+```js
+user.testConnection(serviceUrl) //eg: facebook://accesstoken@facebook.com
+.then(function(){
+	//serviceUrl is valid and can be added as a conncetion
+})
+.catch(function(err){
+   //Handle error
+});
+```
+
+### Sending a message using a connection
+```js
+connection.sendMessage({
+  "receivers":[
+    {
+    	"name":"me"
+    },
+    {
+    	"name":"Page",
+    	"id":"122"
+    }
+  ],
+  "message":{
+    "subject":"test",
+    "body": "ABC",            
+    "image":"http://imageUrl",
+    "link":{
+      "uri": "http://google.com",
+      "description": "link desc",
+      "title":"link title"
+    }
+  }	
+})
+.then(function(response){
+	console.log(response.URIs); //URIs of the sent messages
+})
+.catch(function(err){
+	//handle error
+});
+
+```
+
+
+
+
+
 ## License
 
-Apache-2.0 © [Hossam Saraya](http://saraya.io)
+Apache-2.0 Â© [Hossam Saraya](http://saraya.io)
 
 
 [npm-image]: https://badge.fury.io/js/unificationengine-client.svg
