@@ -4,13 +4,13 @@
 ## Installation
 
 ```sh
-$ npm install --save unificationengine-client
+$ npm install --save ue-node-sdk
 ```
 
 ## Usage
 
 ```js
-var UEClient = require('unificationengine-client');
+var UEClient = require('ue-node-sdk');
 
 var app = new UEClient("APP_KEY","APP_SECRET");
 ```

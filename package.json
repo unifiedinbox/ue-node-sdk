@@ -1,5 +1,5 @@
 {
-  "name": "unificationengine-client",
+  "name": "ue-node-sdk",
   "version": "1.0.0",
   "description": "A UnificationEngine client SDK for NodeJS",
   "homepage": "",
