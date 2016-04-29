@@ -116,10 +116,10 @@ connection.sendMessage({
       "description": "link desc",
       "title":"link title"
     }
-  }	
+  }
 })
-.then(function(response){
-	console.log(response.URIs); //URIs of the sent messages
+.then(function(uris){
+	console.log(uris); //URIs of the sent messages
 })
 .catch(function(err){
 	//handle error

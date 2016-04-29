@@ -2,15 +2,16 @@
 var logging = require("../dist/utils/logger.js")
 var UE = require("../dist/UnificationEngine");
 var User = require("../dist/models/User")
-var ue = new UE("77e34324d1af445fab18907f092f898a","10f1f580972fd134f53189b81443dcb1");
+var ue = new UE("b56063451547432d99111c91fd5d968b","695590bcf875546bf85c6358d3512ef8");
 var async = require("async")
-var accessToken = "CAACEdEose0cBAFsVDWG53azkfubZCn6yrl0PxQRz131rbLwbWZBF4exmHVvlZBNs8QRhgupDEZB2ZBmQvu7nINk6kubZAooSf3lq6xkbtc3Dl1ZBA5kRNLUuciD9EcedUrqA7ue4QF8eM6b7Vn6ronpF012n4yXLOuuGGzlCFPfoijl7VPMU5ZAF8RYT5xWdIxNdJiS3DtHQZAgZDZD";
+var accessToken = "EAACEdEose0cBAG2I6UroYXcpxpIArWGjt6rDxZAh6ThAMleXZACBZAG2IwNNl8Y0hl5UftPcc4RQ6xZAFGt2RWxa2P8sca1OmBZANUeAUD8uiJxaRXGcKDEZBnhfVpEsBBS7ZAgdVTQ4aI881ULYjXwUsqNJIwuBrj3YUpn3GTepgZDZD";
 // var hossamApp = new UE("6545514abd26476fb0fffaa76bfff90b","551a6c05c55741c9bc0e12a56b282435");
 
 
-var user = new User("200f6a0b-b45f-4742-b86e-f1fd2d5e118a","f6063346-0082-4bc1-8093-ebaa14955814")
+ue.createUser().then(function(user){
 user.addConnection("facebook","facebook",accessToken)
 .then(function(connection){
+
     connection.sendMessage({
         "receivers":[
             {
@@ -32,8 +33,8 @@ user.addConnection("facebook","facebook",accessToken)
             }
         }
     })
-    .then(function(res){
-        console.log(res)
+    .then(function(uris){
+        console.log(uris) //list of posted msg uris
     })
     .catch(function(err){
         console.log(err);
@@ -41,6 +42,7 @@ user.addConnection("facebook","facebook",accessToken)
 }).catch(function(err){
     console.log(err);
 })
+});
 //     console.log(err);
 // })
 // function createUser(callback) {
