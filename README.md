@@ -1,6 +1,17 @@
 # unificationengine-client [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > A UnificationEngine client SDK for NodeJS
 
+### Here's how simple it is to post a message on your wall and a Facebook page, in a single call:
+```js
+connection.sendMessage({
+  "receivers":[
+    {"name":"me"},
+    {"name":"Page", "id":"122"}
+  ],
+  "message":{"body": "Hello World!"}
+});
+```
+
 ## Installation
 
 ```sh
