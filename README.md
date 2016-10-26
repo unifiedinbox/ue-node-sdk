@@ -61,7 +61,7 @@ app.deleteUser(user)
 
 #### Adding a connection to a user
 ```js
-user.addConnection(connectionName, service, serviceAccessToken)
+user.addConnection(connectionName, service, serviceAccessToken, optionalParams)
 .then(function(connection){
 	//connection is a Connection object
 })
@@ -72,6 +72,7 @@ user.addConnection(connectionName, service, serviceAccessToken)
 
 - `connectionName` must be unique per connection.
 - `serviceAccessToken` has to be valid and working from the provider side
+- `optionalParams` an object with key:value pair
 
 
 #### Listing User connections

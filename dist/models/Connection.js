@@ -82,7 +82,7 @@ var Connection = (function () {
     }, {
         key: "_buildMessageQuery",
         value: function _buildMessageQuery(messageOptions) {
-            var _this2 = this;
+            var _this = this;
 
             if (!messageOptions.receivers || !messageOptions.message) throw new Error("Message must have a message and areceiver");
 
@@ -95,7 +95,7 @@ var Connection = (function () {
                     return {
                         "name": "Me",
                         "address": "test.test",
-                        "Connector": _this2.name
+                        "Connector": _this.name
                     };
                 } else {
 
@@ -103,7 +103,7 @@ var Connection = (function () {
                         return {
                             "name": "Page",
                             "address": receiver.id,
-                            "Connector": _this2.name
+                            "Connector": _this.name
                         };
                     } else {
                         var name = receiver.name ? receiver.name : '';
@@ -121,7 +121,7 @@ var Connection = (function () {
                 params.receivers = [{
                     "name": "",
                     "address": "",
-                    "Connector": _this.name
+                    "Connector": this.name
                 }];
             }
             queryObject.receivers = params.receivers;
@@ -212,11 +212,11 @@ var Connection = (function () {
     }, {
         key: "sendMessage",
         value: function sendMessage(messageOptions) {
-            var _this3 = this;
+            var _this2 = this;
 
             //Mutate receiver connector to current instance
             messageOptions.receivers = messageOptions.receivers.map(function (rec) {
-                rec.Connector = _this3.name;
+                rec.Connector = _this2.name;
                 return rec;
             });
             return new Promise(function (resolve, reject) {
@@ -224,11 +224,11 @@ var Connection = (function () {
                     url: "https://apiv2.unificationengine.com/v2/message/send",
                     method: "POST",
                     auth: {
-                        user: _this3.user.userKey,
-                        pass: _this3.user.userSecret
+                        user: _this2.user.userKey,
+                        pass: _this2.user.userSecret
                     },
                     form: {
-                        message: _this3._buildMessageQuery(messageOptions)
+                        message: _this2._buildMessageQuery(messageOptions)
                     }
                 }).then(function (response) {
                     resolve(response.URIs);

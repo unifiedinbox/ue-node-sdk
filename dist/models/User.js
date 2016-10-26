@@ -79,14 +79,24 @@ var User = (function () {
 
     _createClass(User, [{
         key: "addConnection",
-        value: function addConnection(connectionName, service, serviceAccessToken) {
+        value: function addConnection(connectionName, service, serviceAccessToken, optionalParams) {
             var _this = this;
 
             if (!_configService_schemesJs2["default"].includes(service)) {
                 throw new Error("Unrecognized service connection scheme: " + service + " ");
             }
 
+            // const connectionUri  = `${service}://${serviceAccessToken}@${service}.com`;
             var connectionUri = service + "://" + serviceAccessToken + "@" + service + ".com";
+            if (optionalParams) {
+                var params = '';
+                for (var key in optionalParams) {
+
+                    params = params + key + '=' + optionalParams[key] + '&';
+                }
+
+                connectionUri = connectionUri + '/?' + params;
+            }
             return new Promise(function (resolve, reject) {
                 (0, _utilsUERequestJs2["default"])({
                     url: "https://apiv2.unificationengine.com/v2/connection/add",
