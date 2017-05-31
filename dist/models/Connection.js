@@ -94,7 +94,7 @@ var Connection = (function () {
                 if (receiver.name && receiver.name.toLowerCase() === "me") {
                     return {
                         "name": "Me",
-                        "address": "test.test",
+                        "address": "",
                         "Connector": _this.name
                     };
                 } else {
