@@ -103,17 +103,20 @@ var Connection = (function () {
                         return {
                             "name": "Page",
                             "address": receiver.id,
-                            "Connector": _this.name
+                            "Connector": _this.name,
+                            "type": "to" //new change
                         };
                     } else {
-                        var name = receiver.name ? receiver.name : '';
-                        var address = receiver.address ? receiver.address : '';
-                        return {
-                            "name": name,
-                            "address": address,
-                            "Connector": _this.name
-                        };
-                    }
+                            var name = receiver.name ? receiver.name : '';
+                            var address = receiver.address ? receiver.address : '';
+                            return {
+                                "name": name,
+                                "address": address,
+                                "Connector": _this.name,
+                                "type": "to" //new change
+
+                            };
+                        }
                 }
             });
 

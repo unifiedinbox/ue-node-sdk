@@ -50,16 +50,18 @@ module.exports = function (_requestOptions) {
                     reject(err, parseException);
                 }
             } else {
-                if (_configErrorsJs2["default"][res.statusCode]) {
-                    reject(_configErrorsJs2["default"][res.statusCode]);
-                    // logger.error(errors[res.statusCode])
-                } else {
-                        reject({
-                            status: res.statusCode,
-                            info: body
-                        });
-                        // logger.error(body);
-                    }
+                if (res) {
+                    if (_configErrorsJs2["default"][res.statusCode]) {
+                        reject(_configErrorsJs2["default"][res.statusCode]);
+                        // logger.error(errors[res.statusCode])
+                    } else {
+                            reject({
+                                status: res.statusCode,
+                                info: body
+                            });
+                            // logger.error(body);
+                        }
+                }
             }
         });
     });

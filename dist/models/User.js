@@ -87,7 +87,13 @@ var User = (function () {
             }
 
             // const connectionUri  = `${service}://${serviceAccessToken}@${service}.com`;
-            var connectionUri = service + "://" + serviceAccessToken + "@" + service + ".com";
+            //var connectionUri = service + "://" + serviceAccessToken + "@" + service + ".com";
+            var connectionUri = service + "://" + serviceAccessToken;
+            if (service != "smtp") //new  change
+                {
+                    connectionUri += "@" + service + ".com";
+                }
+
             if (optionalParams) {
                 var params = '';
                 for (var key in optionalParams) {
@@ -97,6 +103,7 @@ var User = (function () {
 
                 connectionUri = connectionUri + '/?' + params;
             }
+            connectionUri = connectionUri.replace(/&\s*$/, ""); //new  change
             return new Promise(function (resolve, reject) {
                 (0, _utilsUERequestJs2["default"])({
                     url: "https://apiv2.unificationengine.com/v2/connection/add",
